@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, Text, TouchableOpacity, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as MailComposer from 'expo-mail-composer';
 
 import styles from './styles';
@@ -9,18 +9,20 @@ import logoImg from '../../assets/logo.png';
 
 const Details = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const event = route.params.event;
 
   const navigateToEvents = () => {
     navigation.navigate('Events');
   };
 
-  const message =
-    'Olá, estou entrando em contato pois gostaria de contar com seu apoio na campanha que está arrecadando doações de $120 para cirurgia de correção de estrabismo da tamanduá Bibinha';
+  const message = `Olá ${event.name}, estou entrando em contato pois gostaria de ajudar no caso ${event.tile} com o valor de ${event.value}`;
 
   const sendMail = () => {
     MailComposer.composeAsync({
-      subject: 'Helpr case:  Tamanduá zarolho',
-      recipients: ['irlasvendsen@gmail.com'],
+      subject: `Helpr case:  ${event.title}`,
+      recipients: [event.email],
       body: message
     });
   };
@@ -38,11 +40,13 @@ const Details = () => {
       </View>
       <View style={styles.event}>
         <Text style={([styles.eventProperty], { marginTop: 0 })}>NGO:</Text>
-        <Text style={styles.eventValue}>New NGO</Text>
-        <Text style={styles.eventProperty}>CASE:</Text>
+        <Text style={styles.eventValue}>
+          {event.name} from {event.city} / {event.state}
+        </Text>
+        <Text style={styles.eventProperty}>CASE: {event.title}</Text>
         <Text style={styles.eventValue}>Help is need</Text>
         <Text style={styles.eventProperty}>VALUE:</Text>
-        <Text style={styles.eventValue}>$CAD 100.00</Text>
+        <Text style={styles.eventValue}>$CAD {event.value}</Text>
       </View>
       <View style={styles.contactBox}>
         <Text style={styles.helprTitle}>Save the day!</Text>
