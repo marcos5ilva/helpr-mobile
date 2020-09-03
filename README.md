@@ -1,6 +1,6 @@
 # HELPR
 
-![](/src/assets/logo.svg)
+![](/src/assets/logo.png)
 
 #helpr mobile
 A donation app that works as a platform based on micro-funding initiatives. HELPR facilitates the connection between NGOs and donors, supporting small projects.
